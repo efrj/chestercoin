@@ -21,7 +21,7 @@ Este projeto simula os seguintes conceitos de criptomoedas:
 - Gráficos interativos de saldo e fluxo de moedas
 - Interface visual do **Blockchain público** 
 
-Tudo isso sem usar banco de dados — os dados são armazenados localmente em arquivos `.json`.
+Tudo isso sem usar banco de dados. Os dados são armazenados localmente em arquivos `.json`.
 
 ---
 
@@ -52,9 +52,4 @@ Ou use um servidor de sua preferência (Apache, Nginx, etc), onde o diretório r
 - O sistema não usa criptografia SSL nem proteção contra CSRF. 
 
 ## Quer contribuir? 
-Você pode:
-
-- Adicionar tema escuro 
-- Implementar exportação de gráficos como PNG/PDF 
-- Adicionar suporte a múltiplas carteiras por usuário 
 - Para dúvidas ou melhorias, abra uma issue no repositório ou entre em contato! 
