@@ -4,20 +4,38 @@
 
 <?php $title = "Blockchain Público - Chestercoin"; ?>
 
-<div class="jumbotron jumbotron-fluid bg-chc-gold text-dark text-center py-5 rounded-3 mb-5">
+<div class="jumbotron jumbotron-fluid bg-chc-gold text-dark text-center py-5 rounded-4 shadow-sm mb-5">
     <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <img src="/assets/img/logo.png" alt="Logo Chestercoin" class="mb-3" style="max-width: 300px;">
+        <div class="row align-items-center justify-content-center g-4">
+            <div class="col-md-4 text-center">
+                <div class="logo-wrapper position-relative mx-auto" style="width: 200px; height: 200px;">
+                    <img src="/assets/img/logo.png" alt="Logo Chestercoin"
+                         class="img-fluid rounded-circle border border-4 border-white shadow-lg logo-img"
+                         style="object-fit: cover;">
+                    <div class="logo-shine position-absolute top-0 start-0 w-100 h-100 rounded-circle"
+                         style="pointer-events: none; background-image: linear-gradient(transparent 50%, rgba(255,255,255,0.3)); opacity: 0.6;"></div>
+                </div>
             </div>
-            <div class="col-md-6">
-                <h1 class="display-2 fw-bold">Chestercoin (CHC)</h1>
+
+            <div class="col-md-8 text-md-start px-md-5">
+                <h1 class="display-3 fw-bold">Chestercoin (CHC)</h1>
                 <p class="lead display-6">O futuro das transações descentralizadas</p>
             </div>
         </div>
-        <hr class="my-4 bg-dark opacity-25">
-        <p class="h3">Veja em tempo real todas as transações realizadas na rede Chestercoin. Um sistema de blockchain simulado e educacional.</p>
-        <p class="h4 text-secondary"><em>A moeda digital que nasceu para facilitar a compreensão da tecnologia por trás da revolução cripto.</em></p>
+
+        <hr class="my-4 border-top border-2 border-dark opacity-25">
+
+        <div class="row mt-4">
+            <div class="col-md-10 offset-md-1">
+                <p class="h4">
+                    Veja em tempo real todas as transações realizadas na rede Chestercoin.
+                    Um sistema de blockchain simulado e educacional.
+                </p>
+                <p class="h5 text-secondary mt-3">
+                    <em>A moeda digital que nasceu para facilitar a compreensão da tecnologia por trás da revolução cripto.</em>
+                </p>
+            </div>
+        </div>
     </div>
 </div>
 

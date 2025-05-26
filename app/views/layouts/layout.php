@@ -148,22 +148,64 @@ $publicHash = $_SESSION['public_hash'] ?? null;
         }
 
         .jumbotron {
-            padding: 2rem 1rem;
-            margin-bottom: 2rem;
+            padding: 3rem 2rem;
+            margin-bottom: 3rem;
             background-color: var(--chc-gold);
-            border-radius: 1rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .jumbotron .display-5,
-        .jumbotron .lead,
-        .jumbotron p,
-        .jumbotron h1,
-        .jumbotron em {
-            color: #000 !important;
+        .logo-wrapper {
+            animation: floatEffect 3s ease-in-out infinite;
+        }
+        .logo-img {
+            transition: transform 0.3s ease-in-out;
+        }
+        .logo-img:hover {
+            transform: scale(1.05) rotate(2deg);
         }
 
-        .jumbotron hr {
-            border-top-color: rgba(0, 0, 0, 0.2);
+        .logo-shine {
+            pointer-events: none;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.4), transparent 70%);
+            animation: shine 6s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes floatEffect {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+        
+        .display-2 {
+            font-size: 3rem;
+            line-height: 1.2;
+        }
+
+        @media (max-width: 768px) {
+            .jumbotron .display-2 {
+                font-size: 2.2rem;
+            }
+
+            .jumbotron .lead {
+                font-size: 1.2rem;
+            }
+
+            .logo-wrapper {
+                width: 140px !important;
+                height: 140px !important;
+            }
         }
     </style>
 </head>
