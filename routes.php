@@ -1,11 +1,12 @@
 <?php
 
+session_start();
+
 require_once 'config.php';
 require_once CORE_PATH . '/Router.php';
 
 $router = new Router();
 
-session_start();
 $publicHash = $_SESSION['public_hash'] ?? null;
 
 function render(string $view, array $data = []) {
