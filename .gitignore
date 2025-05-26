@@ -1,1 +1,13 @@
-vendor/
+/vendor/
+/data/
+/uploads/
+*.log
+.env
+.env.local
+composer.phar
+.DS_Store
+Thumbs.db
+/.idea/
+/.vscode/
+*.swp
+*.swo
