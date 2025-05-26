@@ -6,7 +6,7 @@
 
 O **Chestercoin (CHC)** é uma simulação didática de uma criptomoeda desenvolvida com **PHP 8.1+**, usando apenas arquivos locais (sem banco de dados), ideal para estudo e compreensão básica de como funcionam sistemas blockchain e carteiras digitais. 
 
-Podemos afirmar que esse projeto chega a ser um meme coin. 
+Esse projeto é um meme coin. 
 
 ---
 
