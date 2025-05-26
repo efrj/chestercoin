@@ -50,3 +50,11 @@ Ou use um servidor de sua preferência (Apache, Nginx, etc), onde o diretório r
 - As "carteiras" são simuladas com hash SHA256 (não criptografia real). 
 - Os dados são armazenados localmente em formato .json. 
 - O sistema não usa criptografia SSL nem proteção contra CSRF. 
+
+## Quer contribuir? 
+Você pode:
+
+- Adicionar tema escuro 
+- Implementar exportação de gráficos como PNG/PDF 
+- Adicionar suporte a múltiplas carteiras por usuário 
+- Para dúvidas ou melhorias, abra uma issue no repositório ou entre em contato! 
