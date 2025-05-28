@@ -1,8 +1,6 @@
 # Chestercoin (CHC) - Simulador de Blockchain em PHP
 
-![Chestercoin Logo](public/assets/img/logo.png)
-
-> O futuro das transações descentralizadas - um sistema de blockchain simulado e educacional.
+![Chestercoin Logo](public/assets/img/logo.png) 
 
 O **Chestercoin (CHC)** é uma simulação didática de uma criptomoeda desenvolvida com **PHP 8.1+**, usando apenas arquivos locais (sem banco de dados), ideal para estudo e compreensão básica de como funcionam sistemas blockchain e carteiras digitais. 
 
