@@ -11,15 +11,15 @@ Esse projeto é um meme coin.
 ## Sobre o Projeto
 
 Este projeto simula os seguintes conceitos de criptomoedas:
-- Geração de **chaves pública e privada**
-- **Autenticação com chave privada**
-- **Transferência de moedas entre carteiras**
-- **Exportação/importação de carteira (.json)**
-- Histórico de login por usuário
-- Gráficos interativos de saldo e fluxo de moedas
-- Interface visual do **Blockchain público** 
+- Geração de **chaves pública e privada** (realizada pela classe `` `Wallet` ``).
+- **Autenticação com chave privada** (gerenciada pela classe `` `Wallet` ``).
+- **Transferência de moedas entre carteiras** (orquestrada pela classe `` `Transaction` ``, utilizando a classe `` `Wallet` `` para manipulação de saldos).
+- **Exportação/importação de carteira (.json)** (funcionalidades da classe `` `Wallet` ``).
+- Histórico de login por usuário (registrado e acessado através de mecanismos internos da aplicação).
+- Gráficos interativos de saldo e fluxo de moedas (gerados a partir de dados processados pelas classes `` `Transaction` `` e `` `Wallet` ``).
+- Interface visual do **Blockchain público** (apresentando transações obtidas através da classe `` `Transaction` ``).
 
-Tudo isso sem usar banco de dados. Os dados são armazenados localmente em arquivos `.json`.
+Tudo isso sem usar banco de dados. Os dados são armazenados localmente em arquivos `` `.json` ``, gerenciados pelas respectivas classes de modelo.
 
 ---
 
@@ -37,16 +37,17 @@ Ou use um servidor de sua preferência (Apache, Nginx, etc), onde o diretório r
 
 ## Pastas e Arquivos Importantes 
 
-- data/ - Armazena carteiras, transações e histórico de login
-- public/ - Ponto de entrada do site (index.php)
-- app/views/ - Páginas dinâmicas (HTML renderizado)
-- functions.php - Funções centrais do sistema
-- config.php - Definições de caminhos e constantes 
+- `` `data/` `` - Armazena carteiras, transações e histórico de login
+- `` `public/` `` - Ponto de entrada do site (`` `index.php` ``)
+- `` `app/core/` `` - Contém o núcleo da aplicação, como o roteador (`` `Router.php` ``) e a classe base de visualização (`` `View.php` ``).
+- `` `app/models/` `` - Contém as classes que representam os dados da aplicação, como `` `Wallet.php` `` para gerenciar carteiras e `` `Transaction.php` `` para transações.
+- `` `app/views/` `` - Contém os arquivos de template (HTML) para apresentar os dados aos usuários.
+- `` `config.php` `` - Definições de caminhos e constantes 
 
 ## Observações de Segurança 
 - Este é um projeto educacional , não destinado à produção.
 - As "carteiras" são simuladas com hash SHA256 (não criptografia real). 
-- Os dados são armazenados localmente em formato .json. 
+- Os dados são armazenados localmente em formato `` `.json` ``. 
 - O sistema não usa criptografia SSL nem proteção contra CSRF. 
 
 ## Quer contribuir? 
