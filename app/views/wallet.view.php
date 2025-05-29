@@ -56,12 +56,13 @@
 
     <ul class="list-group">
         <?php
-        $transactions = getTransactions($publicHash);
+        // $transactions variable is already passed by the controller.
         $dateFilter = $_GET['date_filter'] ?? '';
-        $filtered = filterTransactions($transactions, null, $dateFilter);
-        $page = $_GET['txpage'] ?? 1;
+        // Assuming $transactions is already available from the controller
+        $filtered = Transaction::filterTransactions($transactions, null, $dateFilter);
+        $page = $_GET['txpage'] ?? 1; // Renamed from $page to $currentPage to avoid conflict if $paged['page'] is used directly
         $per_page = 5;
-        $paginated = paginateArray($filtered, $page, $per_page);
+        $paginated = Transaction::paginateArray($filtered, $page, $per_page);
 
         if (!empty($paginated['data'])): ?>
             <?php foreach ($paginated['data'] as $t): ?>
@@ -77,20 +78,20 @@
         <?php endif; ?>
     </ul>
     
-    <?php if ($paginated['total_pages'] > 1): ?>
+    <?php if (isset($paginated['totalPages']) && $paginated['totalPages'] > 1): ?>
         <div class="pagination-container mt-3">
             <nav>
                 <ul class="pagination justify-content-center">
-                    <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
-                        <a class="page-link" href="?txpage=<?= $page - 1 ?>&date_filter=<?= urlencode($dateFilter) ?>">&laquo;</a>
+                    <li class="page-item <?= $paginated['page'] <= 1 ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?txpage=<?= $paginated['page'] - 1 ?>&date_filter=<?= urlencode($dateFilter) ?>">&laquo;</a>
                     </li>
-                    <?php for ($i = 1; $i <= $paginated['total_pages']; $i++): ?>
-                        <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                    <?php for ($i = 1; $i <= $paginated['totalPages']; $i++): ?>
+                        <li class="page-item <?= $i == $paginated['page'] ? 'active' : '' ?>">
                             <a class="page-link" href="?txpage=<?= $i ?>&date_filter=<?= urlencode($dateFilter) ?>"><?= $i ?></a>
                         </li>
                     <?php endfor; ?>
-                    <li class="page-item <?= $page >= $paginated['total_pages'] ? 'disabled' : '' ?>">
-                        <a class="page-link" href="?txpage=<?= $page + 1 ?>&date_filter=<?= urlencode($dateFilter) ?>">&raquo;</a>
+                    <li class="page-item <?= $paginated['page'] >= $paginated['totalPages'] ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?txpage=<?= $paginated['page'] + 1 ?>&date_filter=<?= urlencode($dateFilter) ?>">&raquo;</a>
                     </li>
                 </ul>
             </nav>

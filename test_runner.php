@@ -1,22 +1,25 @@
 <?php
-$_SERVER['REQUEST_METHOD'] = 'POST'; // Changed for this test
-$_SERVER['REQUEST_URI'] = '/login'; // Changed for this test
-$_POST['private_key'] = 'dummy_private_key_for_testing'; // Added for POST
+
+// Start session if not already started
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Set the public_hash for the "logged-in" user
+$_SESSION['public_hash'] = 'f2bf1f9a3033791f03034b6707eaeee69148ebd8a831ced5b80378dcc4b1d952';
+
+$_SERVER['REQUEST_METHOD'] = 'GET';
+$_SERVER['REQUEST_URI'] = '/wallet';
 $_SERVER['SCRIPT_NAME'] = '/index.php';
 $_SERVER['PHP_SELF'] = '/index.php';
 $_SERVER['HTTP_HOST'] = 'localhost';
 $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 
-// Simulate session start if not already started by the application itself upon include
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
 ob_start();
 include 'public/index.php';
 $output = ob_get_clean();
 
-$fatal_error_patterns = [
+$error_patterns = [
     "PHP Fatal error:",
     "Parse error:",
     "Undefined class",
@@ -27,7 +30,7 @@ $fatal_error_patterns = [
 
 $error_found = false;
 $errors_detected = [];
-foreach ($fatal_error_patterns as $pattern) {
+foreach ($error_patterns as $pattern) {
     if (stripos($output, $pattern) !== false) {
         $errors_detected[] = $pattern . " detected.";
         // Capture the line of output
@@ -42,21 +45,20 @@ foreach ($fatal_error_patterns as $pattern) {
 }
 
 if (!$error_found) {
-    echo "POST /login with dummy key seems to load without fatal errors, warnings, or notices.\n";
-    if (stripos($output, "Chave privada inválida.") !== false || stripos($output, "Invalid private key.") !== false) {
-        echo "And it correctly showed 'Chave privada inválida.' error message.\n";
+    echo "GET /wallet for logged-in user seems to load without fatal errors, warnings, or notices.\n";
+    if (empty(trim($output))) {
+        echo "Warning: Output was empty. This might indicate an issue or premature exit.\n";
     } else {
-        echo "But it did NOT show the expected 'Chave privada inválida.' error message. Check output:\n";
-        // echo $output; // Potentially too verbose, but useful for debugging
+        // echo "Output snippet:\n" . substr($output, 0, 500) . "\n"; // For debugging if needed
     }
 } else {
-    echo "Error(s) found for POST /login with dummy key:\n";
+    echo "Error(s) found for GET /wallet for logged-in user:\n";
     foreach($errors_detected as $err) {
         echo "- " . $err . "\n";
     }
-    // echo "Full Output for POST /login:\n" . $output . "\n";
+    // echo "Full Output for GET /wallet:\n" . $output . "\n"; // For debugging if needed
 }
 
-// Clean up session for next test if needed
-// session_destroy(); // Might be too aggressive if other tests rely on session state
+// Clean up session
+// session_destroy(); // Not strictly necessary for this test run
 ?>
