@@ -1,13 +1,13 @@
 <?php
 // Ensure data directory exists for Wallet class operations
-if (!is_dir('data')) {
+if (! is_dir('data')) {
     mkdir('data', 0777, true);
 }
 
 require_once 'app/models/Wallet.php';
 
 $wallet = new Wallet();
-$keys = $wallet->registerWallet(); // Create a new wallet
+$keys   = $wallet->registerWallet(); // Create a new wallet
 
 if (isset($keys['publicHash'])) {
     echo "CREATED_PUBLIC_HASH=" . $keys['publicHash'] . "\n";
@@ -21,5 +21,3 @@ if (isset($keys['publicHash'])) {
 // For now, just creating the wallet is the priority for testing the /wallet page load.
 // If an empty transaction list is fine, we can skip this.
 // Let's assume an empty transaction list is a valid starting point for this test.
-
-?>

@@ -56,11 +56,9 @@
 
     <ul class="list-group">
         <?php
-        // $transactions variable is already passed by the controller.
         $dateFilter = $_GET['date_filter'] ?? '';
-        // Assuming $transactions is already available from the controller
         $filtered = Transaction::filterTransactions($transactions, null, $dateFilter);
-        $page = $_GET['txpage'] ?? 1; // Renamed from $page to $currentPage to avoid conflict if $paged['page'] is used directly
+        $page = $_GET['txpage'] ?? 1;
         $per_page = 5;
         $paginated = Transaction::paginateArray($filtered, $page, $per_page);
 
