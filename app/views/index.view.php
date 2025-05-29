@@ -111,22 +111,22 @@
     </div>
 </div>
 
-<?php if ($paged['total_pages'] > 1): ?>
+<?php if (isset($paged['totalPages']) && $paged['totalPages'] > 1): ?>
     <div class="pagination-container mt-3">
         <nav>
             <ul class="pagination justify-content-center">
-                <li class="page-item <?= $paged['current_page'] <= 1 ? 'disabled' : '' ?>">
-                    <a class="page-link" href="?page=<?= $paged['current_page'] - 1 ?>&hash_filter=<?= urlencode($hashFilter) ?>&date_filter=<?= urlencode($dateFilter) ?>" aria-label="Previous">
+                <li class="page-item <?= $paged['page'] <= 1 ? 'disabled' : '' ?>">
+                    <a class="page-link" href="?page=<?= $paged['page'] - 1 ?>&hash_filter=<?= urlencode($hashFilter) ?>&date_filter=<?= urlencode($dateFilter) ?>" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <?php for ($i = 1; $i <= $paged['total_pages']; $i++): ?>
-                    <li class="page-item <?= $i == $paged['current_page'] ? 'active' : '' ?>">
+                <?php for ($i = 1; $i <= $paged['totalPages']; $i++): ?>
+                    <li class="page-item <?= $i == $paged['page'] ? 'active' : '' ?>">
                         <a class="page-link" href="?page=<?= $i ?>&hash_filter=<?= urlencode($hashFilter) ?>&date_filter=<?= urlencode($dateFilter) ?>"><?= $i ?></a>
                     </li>
                 <?php endfor; ?>
-                <li class="page-item <?= $paged['current_page'] >= $paged['total_pages'] ? 'disabled' : '' ?>">
-                    <a class="page-link" href="?page=<?= $paged['current_page'] + 1 ?>&hash_filter=<?= urlencode($hashFilter) ?>&date_filter=<?= urlencode($dateFilter) ?>" aria-label="Next">
+                <li class="page-item <?= $paged['page'] >= $paged['totalPages'] ? 'disabled' : '' ?>">
+                    <a class="page-link" href="?page=<?= $paged['page'] + 1 ?>&hash_filter=<?= urlencode($hashFilter) ?>&date_filter=<?= urlencode($dateFilter) ?>" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>

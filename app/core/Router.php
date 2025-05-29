@@ -11,7 +11,7 @@ class Router
 
     public function dispatch(): void
     {
-        $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $uri    = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $method = $_SERVER['REQUEST_METHOD'];
 
         foreach ($this->routes[$method] ?? [] as $route => $callback) {
