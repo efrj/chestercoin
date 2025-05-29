@@ -4,39 +4,37 @@ session_start();
 
 require_once 'config.php';
 require_once CORE_PATH . '/Router.php';
+require_once CORE_PATH . '/View.php';
+require_once __DIR__ . '/app/models/Wallet.php';
+require_once __DIR__ . '/app/models/Transaction.php';
 
 $router = new Router();
 
 $publicHash = $_SESSION['public_hash'] ?? null;
 
-function render(string $view, array $data = []) {
-    extract($data);
-    ob_start();
-    require VIEW_PATH . "/$view";
-    $content = ob_get_clean();
-    require VIEW_PATH . "/layouts/layout.php";
-}
-
 $router->add('GET', '/', function () use ($publicHash) {
-    require_once __DIR__ . '/functions.php';
-    $allTransactions = getAllTransactions();
-    $allBalances = getAllBalances();
+    $wallet = new Wallet();
+    $transactionService = new Transaction($wallet);
+
+    $allTransactions = $transactionService->getAllTransactions();
+    $allBalances = $wallet->getAllBalances();
     $hashFilter = $_GET['hash_filter'] ?? '';
     $dateFilter = $_GET['date_filter'] ?? '';
-    $filteredTransactions = filterTransactions($allTransactions, $hashFilter, $dateFilter);
+    $filteredTransactions = Transaction::filterTransactions($allTransactions, $hashFilter, $dateFilter);
     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
     $perPage = 5;
-    $paged = paginateArray($filteredTransactions, $page, $perPage);
+    $paged = Transaction::paginateArray($filteredTransactions, $page, $perPage);
     arsort($allBalances);
     $topBalances = array_slice($allBalances, 0, 5, true);
 
-    $dailyFlow = getDailyCoinFlow($allTransactions);
+    $dailyFlow = Transaction::getDailyCoinFlow($allTransactions);
+    // $networkFlow = Transaction::getWalletNetworkFlow($allTransactions); // If needed
 
     $totalTransactions = count($allTransactions);
-    $totalCoinsMoved = array_sum(array_column($allTransactions, 'amount'));
+    $totalCoinsMoved = array_sum(array_column($allTransactions, 'amount')); // This could be a new method in Transaction or stay
     $totalWallets = count($allBalances);
 
-    render('index.view.php', compact(
+    View::render('index.view.php', compact(
         'publicHash',
         'hashFilter',
         'dateFilter',
@@ -55,10 +53,11 @@ $router->add('GET', '/wallet', function () use ($publicHash) {
         exit;
     }
 
-    require_once __DIR__ . '/functions.php';
+    $wallet = new Wallet();
+    $transactionService = new Transaction($wallet);
 
     if (isset($_GET['export'])) {
-        $filePath = exportWalletToFile($publicHash);
+        $filePath = $wallet->exportWalletToFile($publicHash);
 
         if ($filePath) {
             header('Content-Type: application/json');
@@ -71,11 +70,11 @@ $router->add('GET', '/wallet', function () use ($publicHash) {
         }
     }
 
-    $balance = getBalance($publicHash);
-    $transactions = getTransactions($publicHash);
+    $balance = $wallet->getBalance($publicHash);
+    $transactions = $transactionService->getTransactions($publicHash);
     $error = $success = '';
 
-    render('wallet.view.php', compact('publicHash', 'balance', 'transactions', 'error', 'success'));
+    View::render('wallet.view.php', compact('publicHash', 'balance', 'transactions', 'error', 'success'));
 });
 
 $router->add('POST', '/wallet', function () use ($publicHash) {
@@ -84,26 +83,27 @@ $router->add('POST', '/wallet', function () use ($publicHash) {
         exit;
     }
 
-    require_once __DIR__ . '/functions.php';
+    $wallet = new Wallet(); // Wallet needed for Transaction and getBalance
+    $transactionService = new Transaction($wallet);
 
     $toHash = $_POST['to_hash'] ?? '';
     $amount = (int)($_POST['amount'] ?? 0);
 
-    $result = transfer($publicHash, $toHash, $amount);
+    $result = $transactionService->transfer($publicHash, $toHash, $amount);
+
+    // After transfer, get updated balance and transactions
+    $balance = $wallet->getBalance($publicHash);
+    $transactions = $transactionService->getTransactions($publicHash);
+    $error = '';
+    $success = '';
 
     if ($result === "Transferência realizada com sucesso.") {
-        $balance = getBalance($publicHash);
-        $transactions = getTransactions($publicHash);
         $success = $result;
-        $error = '';
     } else {
-        $balance = getBalance($publicHash);
-        $transactions = getTransactions($publicHash);
         $error = $result;
-        $success = '';
     }
 
-    render('wallet.view.php', compact('publicHash', 'balance', 'transactions', 'error', 'success'));
+    View::render('wallet.view.php', compact('publicHash', 'balance', 'transactions', 'error', 'success'));
 });
 
 $router->add('GET', '/login', function () use ($publicHash) {
@@ -111,15 +111,16 @@ $router->add('GET', '/login', function () use ($publicHash) {
         header("Location: /wallet");
         exit;
     }
+    $wallet = new Wallet(); // Instantiate for registerWallet
 
     if (isset($_GET['new'])) {
-        $generatedKeys = registerWallet('');
-        render('login.view.php', [
+        $generatedKeys = $wallet->registerWallet('');
+        View::render('login.view.php', [
             'publicHash' => $publicHash,
             'generatedKeys' => $generatedKeys
         ]);
     } else {
-        render('login.view.php', [
+        View::render('login.view.php', [
             'publicHash' => $publicHash,
             'generatedKeys' => null,
             'error' => ''
@@ -133,23 +134,22 @@ $router->add('POST', '/login', function () use ($publicHash) {
         exit;
     }
 
-    require_once __DIR__ . '/functions.php';
-
+    $wallet = new Wallet();
     $privateKey = $_POST['private_key'] ?? '';
     $error = '';
 
-    $publicHash = authenticate($privateKey);
+    $loginPublicHash = $wallet->authenticate($privateKey); // Use a different var name to avoid conflict with outer $publicHash
 
-    if ($publicHash) {
-        $_SESSION['public_hash'] = $publicHash;
+    if ($loginPublicHash) {
+        $_SESSION['public_hash'] = $loginPublicHash;
         header("Location: /wallet");
         exit;
     } else {
         $error = "Chave privada inválida.";
     }
 
-    render('login.view.php', [
-        'publicHash' => $publicHash,
+    View::render('login.view.php', [ // Changed from render to View::render
+        'publicHash' => null, // Original $publicHash is null here or user is sent to /wallet
         'generatedKeys' => null,
         'error' => $error
     ]);
@@ -161,10 +161,10 @@ $router->add('GET', '/new-wallet', function () use ($publicHash) {
         exit;
     }
 
-    require_once __DIR__ . '/functions.php';
-    $keys = registerWallet('');
+    $wallet = new Wallet();
+    $keys = $wallet->registerWallet('');
 
-    render('login.view.php', [
+    View::render('login.view.php', [
         'publicHash' => $publicHash,
         'generatedKeys' => $keys
     ]);
@@ -175,7 +175,7 @@ $router->add('GET', '/import', function () use ($publicHash) {
         header("Location: /wallet");
         exit;
     }
-    render('import.view.php', ['publicHash' => $publicHash]);
+    View::render('import.view.php', ['publicHash' => $publicHash]);
 });
 
 $router->add('POST', '/import', function () use ($publicHash) {
@@ -193,20 +193,16 @@ $router->add('POST', '/import', function () use ($publicHash) {
             $expectedHash = hash('sha256', $data['private_key']);
 
             if ($expectedHash === $data['public_hash']) {
-                require_once __DIR__ . '/functions.php';
-                $wallets = loadWallets();
-                $wallets[$data['public_hash']] = [
-                    'privateKey' => $data['private_key'],
-                    'balance' => $data['balance'] ?? 100,
-                    'created_at' => $data['created_at'] ?? date('Y-m-d H:i:s')
-                ];
-                saveWallets($wallets);
-
-                $_SESSION['public_hash'] = $data['public_hash'];
-                header("Location: /wallet");
-                exit;
+                $wallet = new Wallet();
+                if ($wallet->importWalletData($data)) {
+                    $_SESSION['public_hash'] = $data['public_hash'];
+                    header("Location: /wallet");
+                    exit;
+                } else {
+                    die("Erro ao importar dados da carteira.");
+                }
             } else {
-                die("Arquivo inválido.");
+                die("Arquivo inválido. Hash não corresponde.");
             }
         } else {
             die("Formato do arquivo incorreto.");
