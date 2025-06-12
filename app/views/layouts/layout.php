@@ -220,12 +220,14 @@ $publicHash = $_SESSION['public_hash'] ?? null;
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <?php if (!$publicHash): ?>
                 <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="/about">Quem Somos</a></li>
                     <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="/new-wallet">Nova Carteira</a></li>
                     <li class="nav-item"><a class="nav-link" href="/import">Importar</a></li>
                 </ul>
             <?php else: ?>
                 <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="/about">Quem Somos</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link d-flex align-items-center" href="#" id="navbarDropdown" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">

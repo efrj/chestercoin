@@ -216,4 +216,11 @@ $router->add('GET', '/logout', function () {
     header("Location: /");
 });
 
+$router->add('GET', '/about', function () use ($publicHash) {
+    View::render('about.view.php', [
+        'publicHash' => $publicHash,
+        'title' => 'Quem Somos - Chestercoin'
+    ]);
+});
+
 $router->dispatch();
