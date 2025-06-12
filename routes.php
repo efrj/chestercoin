@@ -162,6 +162,21 @@ $router->add('GET', '/new-wallet', function () use ($publicHash) {
     $wallet = new Wallet();
     $keys   = $wallet->registerWallet('');
 
+    View::render('new-wallet.view.php', [
+        'publicHash'    => $publicHash,
+        'generatedKeys' => $keys,
+    ]);
+});
+
+$router->add('GET', '/generate-keys', function () use ($publicHash) {
+    if ($publicHash) {
+        header("Location: /wallet");
+        exit;
+    }
+
+    $wallet = new Wallet();
+    $keys   = $wallet->registerWallet('');
+
     View::render('login.view.php', [
         'publicHash'    => $publicHash,
         'generatedKeys' => $keys,
