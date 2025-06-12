@@ -11,6 +11,7 @@ $publicHash = $_SESSION['public_hash'] ?? null;
     <meta charset="UTF-8">
     <title><?= $title ?? 'Chestercoin - CHC' ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
             --chc-gold: #FFD700;
@@ -19,43 +20,214 @@ $publicHash = $_SESSION['public_hash'] ?? null;
             --chc-bg: #f5f7fa;
             --chc-card: #ffffff;
             --chc-border: #dee2e6;
+            --chc-dark: #2c3e50;
+            --chc-gradient: linear-gradient(135deg, var(--chc-gold), var(--chc-orange));
         }
 
         body {
             background-color: var(--chc-bg);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-top: 80px;
         }
 
-        .navbar-dark.bg-chc {
-            background-color: var(--chc-gold) !important;
+        /* Enhanced Navbar Styling */
+        .navbar-chc {
+            background: var(--chc-gradient) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid var(--chc-turquoise);
+            transition: all 0.3s ease;
+            min-height: 80px;
+        }
+
+        .navbar-chc.scrolled {
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+            min-height: 70px;
         }
 
         .navbar-brand {
-            font-weight: bold;
-            color: #fff !important;
-            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--chc-dark) !important;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+            text-decoration: none;
         }
 
-        .nav-link {
-            color: #333333 !important;
-            font-weight: bold;
+        .navbar-brand:hover {
+            transform: scale(1.05);
+            color: var(--chc-dark) !important;
         }
 
-        .nav-link:hover {
-            color: rgba(255, 255, 255, 0.85) !important;
+        .navbar-brand img {
+            transition: transform 0.3s ease;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .navbar-brand:hover img {
+            transform: rotate(5deg) scale(1.1);
+        }
+
+        .brand-text {
+            margin-left: 12px;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--chc-dark), var(--chc-turquoise));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Navigation Links */
+        .navbar-nav .nav-link {
+            color: var(--chc-dark) !important;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 12px 20px !important;
+            margin: 0 5px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .navbar-nav .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .navbar-nav .nav-link:hover::before {
+            left: 100%;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: var(--chc-dark) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .navbar-nav .nav-link.active {
+            background-color: var(--chc-turquoise);
+            color: white !important;
+            box-shadow: 0 4px 12px rgba(64, 224, 208, 0.3);
+        }
+
+        /* Profile Dropdown */
+        .profile-dropdown .nav-link {
+            background: linear-gradient(135deg, var(--chc-turquoise), #20c997);
+            color: white !important;
+            border-radius: 30px;
+            padding: 8px 16px !important;
+            box-shadow: 0 4px 12px rgba(64, 224, 208, 0.3);
+        }
+
+        .profile-dropdown .nav-link:hover {
+            background: linear-gradient(135deg, #20c997, var(--chc-turquoise));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(64, 224, 208, 0.4);
         }
 
         .profile-icon {
-            width: 40px;
-            height: 40px;
-            background-color: var(--chc-turquoise);
-            color: white;
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, var(--chc-gold), var(--chc-orange));
+            color: var(--chc-dark);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 0.9rem;
             font-weight: bold;
+            margin-right: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-icon:hover {
+            transform: rotate(360deg);
+        }
+
+        /* Dropdown Menu */
+        .dropdown-menu {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            background: white;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .dropdown-item:hover {
+            background: linear-gradient(90deg, var(--chc-gold), var(--chc-orange));
+            color: var(--chc-dark);
+            border-left-color: var(--chc-turquoise);
+            transform: translateX(5px);
+        }
+
+        .dropdown-divider {
+            margin: 0;
+            border-color: var(--chc-border);
+        }
+
+        /* Mobile Menu Toggle */
+        .navbar-toggler {
+            border: 2px solid var(--chc-dark);
+            border-radius: 8px;
+            padding: 8px 12px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-toggler:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2844, 62, 80, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        /* Responsive Design */
+        @media (max-width: 991.98px) {
+            .navbar-nav {
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 15px;
+                margin-top: 15px;
+                padding: 15px;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            }
+
+            .navbar-nav .nav-link {
+                margin: 5px 0;
+                text-align: center;
+            }
+
+            .brand-text {
+                display: none;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+            
+            .navbar-brand img {
+                height: 45px;
+            }
         }
 
         .card {
@@ -210,9 +382,12 @@ $publicHash = $_SESSION['public_hash'] ?? null;
     </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-chc fixed-top">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/"><img src="/assets/img/logo.png" alt="Chestercoin Logo" height="60"></a>
+<nav class="navbar navbar-expand-lg navbar-chc fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img src="/assets/img/logo.png" alt="Chestercoin Logo" height="60">
+            <span class="brand-text">Chestercoin</span>
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -220,26 +395,60 @@ $publicHash = $_SESSION['public_hash'] ?? null;
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <?php if (!$publicHash): ?>
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="/about">Quem Somos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/new-wallet">Nova Carteira</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/import">Importar</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link <?= $_SERVER['REQUEST_URI'] === '/about' ? 'active' : '' ?>" href="/about">
+                            <i class="fas fa-info-circle me-1"></i> Quem Somos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?= $_SERVER['REQUEST_URI'] === '/login' ? 'active' : '' ?>" href="/login">
+                            <i class="fas fa-sign-in-alt me-1"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?= $_SERVER['REQUEST_URI'] === '/new-wallet' ? 'active' : '' ?>" href="/new-wallet">
+                            <i class="fas fa-wallet me-1"></i> Nova Carteira
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?= $_SERVER['REQUEST_URI'] === '/import' ? 'active' : '' ?>" href="/import">
+                            <i class="fas fa-file-import me-1"></i> Importar
+                        </a>
+                    </li>
                 </ul>
             <?php else: ?>
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="/about">Quem Somos</a></li>
-                    <li class="nav-item dropdown">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link <?= $_SERVER['REQUEST_URI'] === '/about' ? 'active' : '' ?>" href="/about">
+                            <i class="fas fa-info-circle me-1"></i> Quem Somos
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown profile-dropdown">
                         <a class="nav-link d-flex align-items-center" href="#" id="navbarDropdown" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="profile-icon me-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36"><path fill="#ffcc4d" d="M36 18c0 9.941-8.059 18-18 18c-9.94 0-18-8.059-18-18C0 8.06 8.06 0 18 0c9.941 0 18 8.06 18 18"/><path fill="#664500" d="M7 21.263c0 3.964 4.596 9 11 9s11-5 11-9c0 0-10.333 2.756-22 0"/><path fill="#5d9040" d="M12 23.003v6.961c0 3 2 6 6 6s6-3 6-6v-6.92c-6.291 1.292-12-.041-12-.041"/><path fill="#664500" d="M12.284 12.33c-.756-.292-1.471-.568-1.471-.968c0-.659.884-.693 1.061-.693c.625 0 .936.234 1.21.441c.21.159.428.323.731.323c.564 0 .821-.397.821-.766c0-.736-.902-1.256-1.858-1.474V8.8a.94.94 0 0 0-1.878 0v.426c-1.144.333-1.845 1.174-1.845 2.235c0 1.311 1.293 1.849 2.434 2.323c.817.34 1.589.661 1.589 1.162c0 .366-.46.762-1.203.762c-.75 0-1.18-.3-1.56-.564c-.262-.183-.51-.356-.806-.356c-.43 0-.766.362-.766.824c0 .679.931 1.356 2.157 1.594v.47a.939.939 0 0 0 1.878 0l-.005-.498c1.296-.315 2.062-1.222 2.062-2.459c.001-1.404-1.414-1.95-2.551-2.389m14.41 2.406c0-1.404-1.415-1.95-2.552-2.389c-.756-.292-1.47-.568-1.47-.968c0-.659.884-.693 1.061-.693c.625 0 .935.234 1.21.441c.211.159.428.323.73.323c.565 0 .822-.397.822-.766c0-.737-.902-1.256-1.858-1.474v-.392a.94.94 0 0 0-1.879 0v.426c-1.143.333-1.845 1.174-1.845 2.235c0 1.311 1.293 1.849 2.434 2.323c.817.34 1.589.661 1.589 1.162c0 .366-.459.762-1.202.762c-.75 0-1.18-.3-1.559-.564c-.263-.183-.511-.356-.806-.356c-.431 0-.767.362-.767.824c0 .679.931 1.356 2.156 1.594v.47a.939.939 0 0 0 1.879 0l-.003-.498c1.295-.317 2.06-1.223 2.06-2.46"/><path fill="#fff" d="M20.97 31.069c0-1.368-1.379-1.901-2.487-2.329c-.737-.284-1.434-.554-1.434-.943c0-.643.861-.675 1.034-.675c.609 0 .912.229 1.18.43c.205.155.418.315.713.315c.55 0 .801-.388.801-.747c0-.717-.879-1.224-1.812-1.437V25.3a.917.917 0 0 0-1.832 0v.415c-1.115.324-1.799 1.145-1.799 2.179c0 1.278 1.261 1.803 2.373 2.265c.797.331 1.549.644 1.549 1.132c0 .357-.448.743-1.173.743c-.731 0-1.15-.292-1.52-.551c-.255-.178-.497-.347-.785-.347c-.419 0-.748.354-.748.804c0 .663.907 1.322 2.102 1.554v.459a.916.916 0 0 0 1.832 0l-.003-.486c1.263-.309 2.009-1.193 2.009-2.398"/></svg>
-                            </span> Minha Carteira
+                            <span class="profile-icon">
+                                <i class="fas fa-coins"></i>
+                            </span>
+                            <span>Minha Carteira</span>
+                            <i class="fas fa-chevron-down ms-2"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/wallet">Meu dinheiro</a></li>
-                            <li><a class="dropdown-item" href="/wallet?export=1">Exportar Carteira</a></li>
+                            <li>
+                                <a class="dropdown-item" href="/wallet">
+                                    <i class="fas fa-wallet me-2"></i> Meu dinheiro
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/wallet?export=1">
+                                    <i class="fas fa-file-export me-2"></i> Exportar Carteira
+                                </a>
+                            </li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="/logout">Sair</a></li>
+                            <li>
+                                <a class="dropdown-item text-danger" href="/logout">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Sair
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -247,6 +456,18 @@ $publicHash = $_SESSION['public_hash'] ?? null;
         </div>
     </div>
 </nav>
+
+<script>
+// Add scroll effect to navbar
+window.addEventListener('scroll', function() {
+    const navbar = document.querySelector('.navbar-chc');
+    if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+});
+</script>
 
 <div class="container py-5 mt-5">
     <?= $content ?>
