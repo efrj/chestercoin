@@ -108,80 +108,136 @@ window.addEventListener('scroll', function() {
 
 <footer class="footer mt-auto py-5">
     <div class="container">
-        <div class="row g-4">
-            <div class="col-lg-4 mb-4">
-                <div class="footer-brand">
-                    <img src="/assets/img/logo.png" alt="Chestercoin Logo" height="50" class="mb-3">
-                    <h5 class="footer-title">Chestercoin (CHC)</h5>
-                    <p class="footer-description">
-                        Uma plataforma educacional para entender blockchain e criptomoedas através da prática.
-                    </p>
+        <!-- Logo Section -->
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <a class="logo-footer" href="/">
+                    <img src="/assets/img/logo.png" alt="Chestercoin" height="60" class="mb-3">
+                </a>
+            </div>
+        </div>
+
+        <div class="row footer-row">
+            <!-- Donation Section -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="donate">
+                    <div class="donate-row">
+                        <span class="footer-title">Apoie o Chestercoin:</span>
+                        <button onclick="alert('Funcionalidade em desenvolvimento')" class="donate-btn btn btn-chc-gold mt-2 mb-3">
+                            <i class="fas fa-heart me-2"></i>Doar
+                        </button>
+                        <p class="donate-text">
+                            <small class="text-muted">Ajude a manter este projeto educacional</small>
+                        </p>
+                    </div>
                 </div>
             </div>
-            
-            <div class="col-lg-2 col-md-6 mb-4">
-                <h6 class="footer-header">Navegação</h6>
-                <ul class="footer-links">
-                    <li><a href="/about">Quem Somos</a></li>
-                    <li><a href="/login">Login</a></li>
-                    <li><a href="/new-wallet">Nova Carteira</a></li>
-                    <li><a href="/import">Importar</a></li>
-                </ul>
-            </div>
-            
+
+            <!-- Introduction Menu -->
             <div class="col-lg-3 col-md-6 mb-4">
-                <h6 class="footer-header">Recursos</h6>
-                <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-book me-2"></i>Documentação</a></li>
-                    <li><a href="#"><i class="fas fa-graduation-cap me-2"></i>Tutorial</a></li>
-                    <li><a href="#"><i class="fas fa-question-circle me-2"></i>FAQ</a></li>
-                    <li><a href="#"><i class="fas fa-code me-2"></i>API</a></li>
-                </ul>
+                <div class="footermenu-item footermenu-introduction">
+                    <p class="footer-title">Introdução:</p>
+                    <ul class="footermenu-list footer-links">
+                        <li><a href="/about">Para Iniciantes</a></li>
+                        <li><a href="/new-wallet">Como Começar</a></li>
+                        <li><a href="/login">Acessar Carteira</a></li>
+                        <li><a href="/import">Importar Carteira</a></li>
+                        <li><a href="#">Como Funciona</a></li>
+                        <li><a href="#">O que Precisa Saber</a></li>
+                    </ul>
+                </div>
             </div>
-            
-            <div class="col-lg-3 col-md-6">
-                <h6 class="footer-header">Conecte-se</h6>
-                <div class="footer-social">
-                    <a href="#" class="social-link">
+
+            <!-- Resources Menu -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="footermenu-item footermenu-resources">
+                    <p class="footer-title">Recursos:</p>
+                    <ul class="footermenu-list footer-links">
+                        <li><a href="#">Documentação</a></li>
+                        <li><a href="#">Tutorial</a></li>
+                        <li><a href="#">Comunidade</a></li>
+                        <li><a href="#">Vocabulário</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">API</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Participate Menu -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="footermenu-item footermenu-participate">
+                    <p class="footer-title">Participar:</p>
+                    <ul class="footermenu-list footer-links">
+                        <li><a href="#">Apoiar Chestercoin</a></li>
+                        <li><a href="/new-wallet">Criar Carteira</a></li>
+                        <li><a href="/wallet">Gerenciar Moedas</a></li>
+                        <li><a href="#">Desenvolvimento</a></li>
+                        <li><a href="#">Contribuir</a></li>
+                    </ul>
+                    
+                    <div class="footermenu-item footermenu-other mt-4">
+                        <p class="footer-title">Outros:</p>
+                        <div class="footer-links">
+                            <a href="#" class="d-block mb-2">Evitar Golpes</a>
+                            <a href="#" class="d-block mb-2">Legal</a>
+                            <a href="#" class="d-block mb-2">Política de Privacidade</a>
+                            <a href="#" class="d-block mb-2">Imprensa</a>
+                            <a href="/about" class="d-block mb-2">Sobre o Chestercoin</a>
+                            <a href="#" class="d-block">Blog</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Media Section -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="footer-social text-center">
+                    <a href="#" class="social-link me-3">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a href="#" class="social-link">
+                    <a href="#" class="social-link me-3">
                         <i class="fab fa-twitter"></i>
                     </a>
-                    <a href="#" class="social-link">
+                    <a href="#" class="social-link me-3">
                         <i class="fab fa-discord"></i>
                     </a>
                     <a href="#" class="social-link">
                         <i class="fab fa-telegram"></i>
                     </a>
                 </div>
-                <div class="footer-newsletter mt-4">
-                    <h6 class="footer-header">Newsletter</h6>
-                    <p class="small">Receba as últimas novidades e atualizações</p>
-                    <div class="input-group">
-                        <input type="email" class="form-control" placeholder="Seu e-mail">
-                        <button class="btn btn-chc-gold" type="button">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </div>
-                </div>
             </div>
         </div>
         
         <hr class="footer-divider">
         
+        <!-- Footer Bottom -->
         <div class="footer-bottom">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p class="copyright mb-0">
-                        © <?= date('Y') ?> Chestercoin. Todos os direitos reservados.
-                    </p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <div class="footer-legal">
-                        <a href="#">Termos de Uso</a>
-                        <span class="separator">|</span>
-                        <a href="#">Privacidade</a>
+            <div class="container">
+                <div class="row footer-bottom-row align-items-center">
+                    <div class="col-md-6">
+                        <div class="footerlicense">
+                            © Projeto Chestercoin <?= date('Y') ?> Lançado sob a 
+                            <a href="http://opensource.org/licenses/mit-license.php" target="_blank" class="text-decoration-none">licença MIT</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <div class="row footer-status-block justify-content-end align-items-center">
+                            <div class="col-auto">
+                                <a href="#" class="statusmenu text-decoration-none me-3">Status da Rede</a>
+                            </div>
+                            <div class="col-auto">
+                                <div class="footer-langselect langselect">
+                                    <select class="form-select form-select-sm" onchange="alert('Seleção de idioma em desenvolvimento')">
+                                        <option value="pt-BR" selected>Português Brasil</option>
+                                        <option value="en">English</option>
+                                        <option value="es">Español</option>
+                                        <option value="fr">Français</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
