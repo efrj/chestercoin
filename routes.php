@@ -226,7 +226,6 @@ $router->add('POST', '/import', function () use ($publicHash) {
 });
 
 $router->add('GET', '/logout', function () {
-    session_start();
     session_destroy();
     header("Location: /");
 });
